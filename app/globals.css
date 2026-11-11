@@ -1,0 +1,88 @@
+@import "tailwindcss";
+
+/*
+ * Design tokens (Tailwind v4: le variabili in @theme generano automaticamente
+ * le utility, es. --color-navy-900 → bg-navy-900, text-navy-900...).
+ * Palette: blu notte (navy) + arancione come colore d'accento.
+ */
+@theme {
+  --color-navy-50: #f2f5fa;
+  --color-navy-100: #e3e9f3;
+  --color-navy-200: #c3cfe2;
+  --color-navy-300: #94a7c6;
+  --color-navy-400: #6580a8;
+  --color-navy-500: #46628c;
+  --color-navy-600: #344d73;
+  --color-navy-700: #243a5c;
+  --color-navy-800: #172a47;
+  --color-navy-900: #0f1e36;
+  --color-navy-950: #091325;
+
+  --color-accent-300: #ffb27a;
+  --color-accent-400: #ff9447;
+  --color-accent-500: #ff7a1a;
+  --color-accent-600: #e5620a;
+  --color-accent-700: #b84c06;
+
+  /* Font caricati con next/font in app/layout.tsx */
+  --font-sans: var(--font-body), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-heading), ui-sans-serif, system-ui, sans-serif;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    /* Compensa l'header fisso quando si naviga con le ancore */
+    scroll-padding-top: 5rem;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  body {
+    @apply bg-navy-950 font-sans text-navy-100 antialiased;
+  }
+
+  h1,
+  h2,
+  h3 {
+    @apply font-display tracking-tight text-white;
+    text-wrap: balance;
+  }
+
+  :focus-visible {
+    @apply outline-2 outline-offset-2 outline-accent-400;
+  }
+
+  /* Rispetta chi preferisce ridurre le animazioni */
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+/*
+ * Utility personalizzate riutilizzabili (bottoni ed etichette di sezione).
+ * In Tailwind v4 si dichiarano con @utility per poterle combinare con @apply.
+ */
+@utility btn {
+  @apply inline-flex items-center justify-center gap-2 rounded-xl px-6 py-3.5 text-base font-semibold transition-colors duration-200;
+}
+
+/* Testo navy su arancione: contrasto AA (il bianco sull'arancione non lo è) */
+@utility btn-primary {
+  @apply btn bg-accent-500 text-navy-950 hover:bg-accent-400;
+}
+
+@utility btn-ghost {
+  @apply btn border border-white/20 text-white hover:border-white/40 hover:bg-white/5;
+}
+
+@utility eyebrow {
+  @apply text-sm font-semibold tracking-[0.18em] text-accent-400 uppercase;
+}

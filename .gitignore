@@ -1,0 +1,14 @@
+# dipendenze
+/node_modules
+
+# build Next.js
+/.next/
+/out/
+next-env.d.ts
+*.tsbuildinfo
+
+# varie
+.DS_Store
+*.log
+.env*.local
+.vercel
