@@ -12,3 +12,6 @@ next-env.d.ts
 *.log
 .env*.local
 .vercel
+
+# file generato automaticamente da Next.js per gli agenti AI
+/AGENTS.md
