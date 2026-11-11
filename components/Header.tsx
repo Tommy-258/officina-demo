@@ -32,12 +32,16 @@ export default function Header() {
           </span>
         </a>
 
-        {/* Navigazione desktop */}
-        <nav aria-label="Navigazione principale" className="hidden md:block">
+        {/*
+          Navigazione desktop: solo da lg (1024px). Tra 768 e 1024px le cinque
+          voci + il pulsante telefono non stanno su una riga, quindi lì si usa
+          il menu hamburger.
+        */}
+        <nav aria-label="Navigazione principale" className="hidden lg:block">
           <ul className="flex items-center gap-7 text-sm font-medium">
             {navLinks.map((link) => (
               <li key={link.href}>
-                <a href={link.href} className="text-navy-200 transition-colors hover:text-white">
+                <a href={link.href} className="whitespace-nowrap text-navy-200 transition-colors hover:text-white">
                   {link.label}
                 </a>
               </li>
@@ -45,29 +49,34 @@ export default function Header() {
           </ul>
         </nav>
 
-        <a href={site.phoneHref} className="btn-primary hidden !px-4 !py-2.5 text-sm md:inline-flex">
-          <PhoneIcon className="size-4" />
-          {site.phoneDisplay}
-        </a>
+        {/* Telefono (da md) + pulsante hamburger (sotto lg), raggruppati a destra */}
+        <div className="flex items-center gap-2">
+          <a
+            href={site.phoneHref}
+            className="btn-primary hidden shrink-0 !px-4 !py-2.5 text-sm whitespace-nowrap md:inline-flex"
+          >
+            <PhoneIcon className="size-4" />
+            {site.phoneDisplay}
+          </a>
 
-        {/* Pulsante menu mobile */}
-        <button
-          type="button"
-          className="grid size-11 place-items-center rounded-lg text-white md:hidden"
-          aria-expanded={open}
-          aria-controls="mobile-menu"
-          aria-label={open ? "Chiudi il menu" : "Apri il menu"}
-          onClick={() => setOpen((v) => !v)}
-        >
-          {open ? <CloseIcon className="size-6" /> : <MenuIcon className="size-6" />}
-        </button>
+          <button
+            type="button"
+            className="grid size-11 place-items-center rounded-lg text-white lg:hidden"
+            aria-expanded={open}
+            aria-controls="mobile-menu"
+            aria-label={open ? "Chiudi il menu" : "Apri il menu"}
+            onClick={() => setOpen((v) => !v)}
+          >
+            {open ? <CloseIcon className="size-6" /> : <MenuIcon className="size-6" />}
+          </button>
+        </div>
       </div>
 
-      {/* Menu mobile */}
+      {/* Menu a scomparsa (mobile e tablet, sotto i 1024px) */}
       <nav
         id="mobile-menu"
         aria-label="Navigazione mobile"
-        className={`border-t border-white/10 bg-navy-950 md:hidden ${open ? "block" : "hidden"}`}
+        className={`border-t border-white/10 bg-navy-950 lg:hidden ${open ? "block" : "hidden"}`}
       >
         <ul className="flex flex-col px-4 py-3">
           {navLinks.map((link) => (
